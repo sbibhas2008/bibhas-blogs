@@ -1,0 +1,20 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-background: oklch(0.23 0.0548 281.32);
+  --color-primary: oklch(0.84 0.1341 180.62);
+  --color-secondary: oklch(0.78 0.1325 181.91 / 10%);
+  --color-fontPrimary: oklch(1 0 0);
+  --color-fontSecondary: oklch(0.71 0.0351 256.79);
+}
+
+html {
+  @apply h-full w-full;
+}
+
+body {
+  margin: 0;
+  @apply h-full w-full;
+  background-color: var(--color-background);
+  color: var(--color-fontPrimary);
+}
