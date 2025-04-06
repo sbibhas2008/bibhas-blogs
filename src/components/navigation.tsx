@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useMemo, useState } from 'react'
+import React, { useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
@@ -29,15 +29,38 @@ const Logo = () => {
   )
 }
 
-const DesktopNavigation = ({ getLinkClass }: { getLinkClass: (path: string) => string }) => {
+const NavigationLinks = ({
+  links,
+  getLinkClass,
+  onClick,
+}: {
+  links: { path: string; label: string }[]
+  getLinkClass: (path: string) => string
+  onClick?: () => void
+}) => {
+  return (
+    <>
+      {links.map(({ path, label }) => (
+        <Link key={path} href={path}>
+          <div className={`py-4 ${getLinkClass(path)}`} onClick={onClick}>
+            {label}
+          </div>
+        </Link>
+      ))}
+    </>
+  )
+}
+
+const DesktopNavigation = ({
+  links,
+  getLinkClass,
+}: {
+  links: { path: string; label: string }[]
+  getLinkClass: (path: string) => string
+}) => {
   return (
     <div className="hidden sm:flex space-x-8">
-      <Link href="/about">
-        <span className={getLinkClass('/about')}>About</span>
-      </Link>
-      <Link href="/posts">
-        <span className={getLinkClass('/posts')}>Posts</span>
-      </Link>
+      <NavigationLinks links={links} getLinkClass={getLinkClass} />
     </div>
   )
 }
@@ -45,10 +68,12 @@ const DesktopNavigation = ({ getLinkClass }: { getLinkClass: (path: string) => s
 const MobileNavigation = ({
   isMenuOpen,
   setIsMenuOpen,
+  links,
   getLinkClass,
 }: {
   isMenuOpen: boolean
   setIsMenuOpen: React.Dispatch<React.SetStateAction<boolean>>
+  links: { path: string; label: string }[]
   getLinkClass: (path: string) => string
 }) => {
   const HamburgerIcon = () => (
@@ -71,16 +96,7 @@ const MobileNavigation = ({
           isMenuOpen ? 'translate-y-0 opacity-100' : '-translate-y-10 opacity-0 pointer-events-none'
         }`}
       >
-        <Link href="/about">
-          <div className={`py-4 ${getLinkClass('/about')}`} onClick={() => setIsMenuOpen(false)}>
-            About
-          </div>
-        </Link>
-        <Link href="/posts">
-          <div className={`py-4 ${getLinkClass('/posts')}`} onClick={() => setIsMenuOpen(false)}>
-            Posts
-          </div>
-        </Link>
+        <NavigationLinks links={links} getLinkClass={getLinkClass} onClick={() => setIsMenuOpen(false)} />
       </div>
     </>
   )
@@ -90,11 +106,12 @@ export const Navigation = () => {
   const pathname = usePathname()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
-  const isLinkActive = useMemo(() => {
-    return (path: string) => pathname === path
-  }, [pathname])
+  const links = [
+    { path: '/about', label: 'About' },
+    { path: '/posts', label: 'Posts' },
+  ]
 
-  const getLinkClass = (path: string) => (isLinkActive(path) ? 'underline' : '')
+  const getLinkClass = (path: string) => (pathname === path ? 'underline' : '')
 
   return (
     <div className="fixed top-0 left-0 h-16 w-full bg-background text-fontPrimary px-8">
@@ -103,8 +120,13 @@ export const Navigation = () => {
           <Logo />
         </Link>
 
-        <DesktopNavigation getLinkClass={getLinkClass} />
-        <MobileNavigation isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} getLinkClass={getLinkClass} />
+        <DesktopNavigation links={links} getLinkClass={getLinkClass} />
+        <MobileNavigation
+          isMenuOpen={isMenuOpen}
+          setIsMenuOpen={setIsMenuOpen}
+          links={links}
+          getLinkClass={getLinkClass}
+        />
       </div>
     </div>
   )
