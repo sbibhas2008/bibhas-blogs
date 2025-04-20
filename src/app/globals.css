@@ -25,4 +25,5 @@ body {
   @apply h-full w-full;
   background-color: var(--color-background);
   color: var(--color-fontPrimary);
+  font-family: 'Outfit', sans-serif;
 }

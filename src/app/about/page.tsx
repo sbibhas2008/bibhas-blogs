@@ -3,6 +3,7 @@ import Image from 'next/image'
 import { Code2, Server, Repeat, FlaskConical, Brain, Briefcase, Cpu, Projector } from 'lucide-react'
 import { Card } from '@/components/card'
 import { TechCarousel } from '@/components/tech-carousel'
+import SkillsShowcase from '@/components/SkillsShowcase'
 
 const techCategories = [
   {
@@ -182,6 +183,7 @@ const About = () => {
       </div>
 
       <TechSnapshotCompact />
+      <SkillsShowcase />
       <ExperienceSection />
       <ProjectsSection />
     </div>
