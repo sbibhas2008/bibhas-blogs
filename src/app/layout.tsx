@@ -12,7 +12,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className="bg-background">
         <Navigation />
-        <main className="pt-20 px-8 md:px-36 max-w-[1440px] mx-auto">{children}</main>
+        <main className="px-2 md:px-8 max-w-[1440px] mx-auto">{children}</main>
       </body>
     </html>
   )

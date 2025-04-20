@@ -114,19 +114,22 @@ export const Navigation = () => {
   const getLinkClass = (path: string) => (pathname === path ? 'underline' : '')
 
   return (
-    <div className="fixed top-0 left-0 h-16 w-full bg-background text-fontPrimary px-8">
-      <div className="flex items-center justify-between sm:justify-center sm:space-x-8 h-full">
-        <Link href="/" onClick={() => setIsMenuOpen(false)}>
-          <Logo />
-        </Link>
+    // Added a wrapper div with padding-bottom equal to the height of the navbar
+    <div className="w-full pb-16">
+      <div className="fixed top-0 left-0 h-16 w-full bg-background text-fontPrimary px-8 z-[9999]">
+        <div className="flex items-center justify-between sm:justify-center sm:space-x-8 h-full">
+          <Link href="/" onClick={() => setIsMenuOpen(false)}>
+            <Logo />
+          </Link>
 
-        <DesktopNavigation links={links} getLinkClass={getLinkClass} />
-        <MobileNavigation
-          isMenuOpen={isMenuOpen}
-          setIsMenuOpen={setIsMenuOpen}
-          links={links}
-          getLinkClass={getLinkClass}
-        />
+          <DesktopNavigation links={links} getLinkClass={getLinkClass} />
+          <MobileNavigation
+            isMenuOpen={isMenuOpen}
+            setIsMenuOpen={setIsMenuOpen}
+            links={links}
+            getLinkClass={getLinkClass}
+          />
+        </div>
       </div>
     </div>
   )

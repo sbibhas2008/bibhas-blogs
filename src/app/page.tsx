@@ -1,5 +1,7 @@
 import { Card } from '@/components/card'
 import { LinkStyled } from '@/components/LinkStyled'
+import { Button } from '@/components/Button'
+import { ArrowRightIcon } from 'lucide-react'
 
 // Mock data - this will come from the middleware that parses and handles the content of the website.
 const publications = [
@@ -72,29 +74,51 @@ const Publication = ({
 
 const Home = () => {
   return (
-    <>
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-y-6 sm:gap-2">
-        <div className="flex flex-col justify-center gap-y-2">
-          <h1 className="text-4xl font-bold">Bibhas Sharma</h1>
-          <p>
-            Senior Software Engineer @ <LinkStyled href="https://www.home-in.com.au">Home-in, CBA</LinkStyled>
-          </p>
+    <div>
+      {/* Hero section with adjusted z-index to prevent navigation overlap */}
+      <section className="relative" style={{ zIndex: 1 }}>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-y-6 sm:gap-8 my-8 p-6 bg-gradient-to-br from-primary/5 to-secondary/10 rounded-xl shadow-lg border border-primary/10 animate-fade-in">
+          <div className="flex flex-col justify-center gap-y-4 animate-slide-up">
+            <div className="relative">
+              <h1 className="text-4xl sm:text-5xl font-bold bg-gradient-to-r from-primary to-secondary inline-block  bg-clip-text">
+                Bibhas Sharma
+              </h1>
+              <div className="absolute -bottom-1 left-0 h-1 w-1/3 bg-gradient-to-r from-primary to-secondary rounded-full animate-expand"></div>
+            </div>
+            <p className="text-lg">
+              Senior Software Engineer @ <LinkStyled href="https://www.home-in.com.au">Home-in, CBA</LinkStyled>
+            </p>
+            <div className="mt-4 flex gap-x-4">
+              <Button href="/about">
+                About me
+                <ArrowRightIcon size={16} className="ml-2 group-hover:translate-x-1 transition-transform" />
+              </Button>
+            </div>
+          </div>
+          <div className="sm:col-span-2 sm:p-8 text-fontSecondary animate-fade-in-delay">
+            <div className="relative">
+              <span className="text-6xl absolute -top-8 -left-6 text-primary/20"></span>
+              <p className="text-lg leading-relaxed italic">
+                Hi there, I&apos;m a highly-adaptable software engineer with over three years of experience in
+                fast-paced startup environments. With a strong product mindset, I prioritise delivering high-impact
+                solutions that address business challenges efficiently and with minimal complexity.
+              </p>
+              <p className="text-lg mt-4 leading-relaxed italic">
+                As a backend-focused, language-agnostic engineer, I emphasise delivering value to the business over
+                specific technology choices, ensuring pragmatic and effective solutions.
+              </p>
+              <span className="text-6xl absolute -bottom-12 -right-6 text-primary/20"></span>
+            </div>
+          </div>
         </div>
-        <div className="sm:col-span-2 sm:p-8 text-fontSecondary">
-          Hi there 👋, I&apos;m a highly-adaptable software engineer with over three years of experience in fast-paced
-          startup environments. With a strong product mindset, I prioritise delivering high-impact solutions that
-          address business challenges efficiently and with minimal complexity. As a backend-focused, language-agnostic
-          engineer, I emphasise delivering value to the business over specific technology choices, ensuring pragmatic
-          and effective solutions.
-        </div>
-      </div>
-      <div className="mt-8">
+      </section>
+      <div className="mt-16">
         <h1 className="text-4xl font-bold my-8">Recent publications</h1>
         {publications.map((publication, idx) => (
           <Publication key={idx} publication={publication} />
         ))}
       </div>
-    </>
+    </div>
   )
 }
 
